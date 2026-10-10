@@ -1,48 +1,49 @@
-ImportNumber = 27
+secret = 27
+max_attempts = 5
+count = 0
+guess = 0
 
-guesses = 5
+print("=" * 42)
+print(" 🎮 NUMBER GUESSING GAME")
+print("=" * 42)
+print("I have a secret number between 1 and 50.")
+print("You have 5 attempts to guess it.")
+print("After each wrong guess I will give you a hint.")
+print()
 
-while guesses > 0:
+while count < max_attempts and guess != secret:
+    guess = int(input("Your guess: "))
+    count = count + 1
 
-    guesses -= 1
-
-    guess = int(input("Guess a number between 1 and 50: "))
-
-    if guess == ImportNumber:
-        print("Congratulations! You guessed the correct number.")
-        break
-
-    elif guess < ImportNumber:
-        difference = ImportNumber - guess
-
-        if difference >= 15:
-            print("🧊 Ice cold!")
-        elif difference >= 8:
-            print("🥶 Cold!")
-        elif difference >= 4:
-            print("🌡️ Warm!")
-        else:
-            print("🔥 Hot!")
-
+    if guess == secret:
+        print()
+        print("🎉 Correct! You guessed it in", count, "attempt(s)!")
+        print("Well done — you are a number wizard! 🧙")
     else:
-        difference = guess - ImportNumber
-
-        if difference >= 15:
-            print("🧊 Ice cold!")
-        elif difference >= 8:
-            print("🥶 Cold!")
-        elif difference >= 4:
-            print("🌡️ Warm!")
+        if guess > secret:
+            diff = guess - secret
         else:
-            print("🔥 Hot!")
+            diff = secret - guess
 
-    print("Remaining lives:", end=" ")
+        if diff >= 20:
+            print("🧊 Ice cold! You are very far away.")
+        elif diff >= 10:
+            print("🥶 Cold. Still quite a distance to go.")
+        elif diff >= 5:
+            print("🌡️ Warm! Getting closer...")
+        else:
+            print("🔥 Hot! Almost there!")
 
-    for i in range(guesses):
-        print("❤️", end=" ")
+        remaining = max_attempts - count
+        if remaining > 0:
+            print("Lives left: ", end="")
+            for i in range(remaining):
+                print("❤️ ", end="")
+            print()
+            print()
 
-    print()
-
-if guesses == 0 and guess != ImportNumber:
-    print("Sorry, you've run out of guesses.")
-    print("The correct number was", ImportNumber)
+if guess != secret:
+    print("=" * 42)
+    print("💀 Game over! You used all 5 attempts.")
+    print("   The secret number was:", secret)
+    print("=" * 42)
